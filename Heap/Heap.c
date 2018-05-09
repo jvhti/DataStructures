@@ -11,7 +11,11 @@ int main(void){
 	while(!isEmptyHeap(h)){
 		//printHeap(h);
 		tt = popHeap(h);
+#ifdef MAX_HEAP
 		if(t < tt){
+#else
+		if(t > tt){
+#endif
 			printf("Invalid output %i (last pop) < %i (cur pop)\n", t, tt);
 			exit(1);
 		}
@@ -88,8 +92,11 @@ void resizeHeap(heap *h, size_t size){
 }
 
 void _reHeapUp(heap *h, size_t index){
+#ifdef MAX_HEAP
 	if(index == 0 || h->data[FATHER(index)] > h->data[index]) return;
-
+#else
+	if(index == 0 || h->data[FATHER(index)] < h->data[index]) return;
+#endif
 	TYPE t = h->data[FATHER(index)];
 	h->data[FATHER(index)] = h->data[index];
 	h->data[index] = t;
@@ -102,16 +109,28 @@ void _reHeapDown(heap *h, size_t index){
 	TYPE t;
 
 	if(lc < h->size && rc < h->size){
+#ifdef MAX_HEAP
 		if(h->data[lc] >= h->data[rc] && h->data[lc] > h->data[index]){
+#else
+		if(h->data[lc] <= h->data[rc] && h->data[lc] < h->data[index]){
+#endif
 			SWAP(h->data[index], h->data[lc], t);
 			_reHeapDown(h, lc);
+#ifdef MAX_HEAP
 		}else if(h->data[rc] > h->data[index]){
+#else
+		}else if(h->data[rc] < h->data[index]){
+#endif
 			SWAP(h->data[index], h->data[rc], t);
 			_reHeapDown(h, rc);
 		}
 
 	}else{
+#ifdef MAX_HEAP
 		if(lc < h->size && h->data[lc] > h->data[index]){
+#else
+		if(lc < h->size && h->data[lc] < h->data[index]){
+#endif
 			SWAP(h->data[index], h->data[lc], t);
 			_reHeapDown(h, lc);
 		}

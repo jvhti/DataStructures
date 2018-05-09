@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define MAX_HEAP
+
 #define TYPE char
 #define TYPE_PRINTF "%i"
 #define TYPE_DEFAULT 0

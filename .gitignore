@@ -1,0 +1,7 @@
+/* .gitignore file in repo root */
+
+./*/a.out
+./a.out
+
+./*/.*.swp
+./.*.swp
